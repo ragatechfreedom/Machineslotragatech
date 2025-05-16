@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TRD Slot Rush</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background: linear-gradient(to bottom, #1e1e1e, #3b3b3b);
+      color: white;
+      text-align: center;
+      padding: 20px;
+    }
+    .slot-container {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin: 20px 0;
+    }
+    .reel {
+      width: 80px;
+      height: 80px;
+      background-color: #222;
+      border: 3px solid #555;
+      border-radius: 10px;
+      font-size: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 18px;
+      background-color: #00c853;
+      border: none;
+      border-radius: 10px;
+      color: white;
+      cursor: pointer;
+    }
+    #result {
+      margin-top: 20px;
+      font-size: 24px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <h1>TRD Slot Rush</h1>
+  <div class="slot-container">
+    <div class="reel" id="reel1">?</div>
+    <div class="reel" id="reel2">?</div>
+    <div class="reel" id="reel3">?</div>
+  </div>
+  <button onclick="spin()">SPIN</button>
+  <div id="result"></div>
+
+  <script>
+    const symbols = ['💰', '💡', '🔪', '📱', '💎', '💸'];
+
+    function spin() {
+      const r1 = symbols[Math.floor(Math.random() * symbols.length)];
+      const r2 = symbols[Math.floor(Math.random() * symbols.length)];
+      const r3 = symbols[Math.floor(Math.random() * symbols.length)];
+
+      document.getElementById('reel1').textContent = r1;
+      document.getElementById('reel2').textContent = r2;
+      document.getElementById('reel3').textContent = r3;
+
+      if (r1 === r2 && r2 === r3) {
+        document.getElementById('result').textContent = 'JACKPOT! +100 TRD';
+      } else if (r1 === r2 || r2 === r3 || r1 === r3) {
+        document.getElementById('result').textContent = 'Nice! +10 TRD';
+      } else {
+        document.getElementById('result').textContent = 'Try Again...';
+      }
+    }
+  </script>
+</body>
+</html>
