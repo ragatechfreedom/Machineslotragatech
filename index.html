@@ -2,9 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>TRD Slot Rush</title>
-  <script src="https://cdn.jsdelivr.net/npm/js-sha256@0.9.0/src/sha256.min.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TRD COIN MINING</title>
   <style>
     body {
       font-family: sans-serif;
@@ -60,8 +59,8 @@
   <h1>TRD Slot Rush</h1>
 
   <div id="balance-panel">
-    TRD Balance: <span id="balance">100</span><br />
-    Spins Cost: 0.005 TRD
+    TRD Balance: <span id="balance">100.000</span><br>
+    Spin Cost: 0.005 TRD
   </div>
 
   <div class="slot-container">
@@ -76,24 +75,19 @@
   <button onclick="toggleAutoSpin()" id="autoSpinBtn">AUTO SPIN</button>
   <div id="result"></div>
   <div id="hash-display"></div>
-  <div id="verify-display"></div>
 
   <script>
-    const symbols = ['💰', '💡', '🔪', '📱', '💎', '💸'];
-    let balance = 100;
+    let balance = 100.0;
     let autoSpinning = false;
     let autoSpinInterval;
     const username = 'guestcoba';
+    const apiUrl = 'https://wise-enthusiastic-bug.glitch.me'; // Ganti dengan URL backend-mu
 
     function updateBalanceDisplay() {
       document.getElementById('balance').textContent = balance.toFixed(3);
     }
 
-    function getRandomSymbol(hashSegment) {
-      return symbols[parseInt(hashSegment, 16) % symbols.length];
-    }
-
-    function spin() {
+    async function spin() {
       if (balance < 0.005) {
         document.getElementById('result').textContent = 'Not enough TRD to spin!';
         stopAutoSpin();
@@ -103,49 +97,27 @@
       balance -= 0.005;
       updateBalanceDisplay();
 
-      const timestamp = Date.now();
-      const seed = `${username}-${timestamp}`;
-      const hash = sha256(seed);
-      document.getElementById('hash-display').textContent = `Hash: ${hash}`;
+      try {
+        const response = await fetch(apiUrl, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ username })
+        });
+        const data = await response.json();
 
-      const reels = [];
-      for (let i = 0; i < 5; i++) {
-        const segment = hash.substr(i * 4, 4);
-        const symbol = getRandomSymbol(segment);
-        document.getElementById('reel' + (i + 1)).textContent = symbol;
-        reels.push(symbol);
+        data.reels.forEach((symbol, i) => {
+          document.getElementById('reel' + (i + 1)).textContent = symbol;
+        });
+
+        document.getElementById('hash-display').textContent = `Hash: ${data.hash}`;
+        document.getElementById('result').textContent = `You won +${data.reward} TRD!`;
+
+        balance += data.reward;
+        updateBalanceDisplay();
+      } catch (err) {
+        document.getElementById('result').textContent = 'Spin failed: ' + err.message;
+        stopAutoSpin();
       }
-
-      // Verifikasi ulang dari hash hasil reel untuk transparansi
-      const verifyReels = [];
-      for (let i = 0; i < 5; i++) {
-        const segment = hash.substr(i * 4, 4);
-        const symbol = getRandomSymbol(segment);
-        verifyReels.push(symbol);
-      }
-      const isVerified = reels.join() === verifyReels.join();
-      document.getElementById('verify-display').textContent = isVerified ? '✓ Verifikasi Berhasil (Hash Valid)' : '✗ Verifikasi Gagal';
-
-      // Hitung jumlah kemunculan
-      const counts = {};
-      reels.forEach(sym => counts[sym] = (counts[sym] || 0) + 1);
-
-      let reward = 0;
-      let maxMatch = Math.max(...Object.values(counts));
-
-      if (maxMatch >= 4) {
-        reward = 10000;
-        document.getElementById('result').textContent = 'EPIC WIN! 4+ Matches = +10000 TRD';
-      } else if (maxMatch === 3) {
-        reward = 100;
-        document.getElementById('result').textContent = 'Nice! 3 Matches = +100 TRD';
-      } else {
-        reward = 0.01;
-        document.getElementById('result').textContent = 'No match... Consolation +0.01 TRD';
-      }
-
-      balance += reward;
-      updateBalanceDisplay();
     }
 
     function toggleAutoSpin() {
