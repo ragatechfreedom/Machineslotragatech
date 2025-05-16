@@ -37,6 +37,7 @@
       border-radius: 10px;
       color: white;
       cursor: pointer;
+      margin: 5px;
     }
     #result {
       margin-top: 20px;
@@ -64,11 +65,14 @@
   </div>
 
   <button onclick="spin()">SPIN</button>
+  <button onclick="toggleAutoSpin()" id="autoSpinBtn">AUTO SPIN</button>
   <div id="result"></div>
 
   <script>
     const symbols = ['💰', '💡', '🔪', '📱', '💎', '💸'];
     let balance = 100;
+    let autoSpinning = false;
+    let autoSpinInterval;
 
     function updateBalanceDisplay() {
       document.getElementById('balance').textContent = balance;
@@ -77,6 +81,7 @@
     function spin() {
       if (balance < 5) {
         document.getElementById('result').textContent = 'Not enough TRD to spin!';
+        stopAutoSpin();
         return;
       }
 
@@ -104,6 +109,24 @@
 
       balance += reward;
       updateBalanceDisplay();
+    }
+
+    function toggleAutoSpin() {
+      if (autoSpinning) {
+        stopAutoSpin();
+      } else {
+        autoSpinning = true;
+        document.getElementById('autoSpinBtn').textContent = 'STOP AUTO SPIN';
+        autoSpinInterval = setInterval(() => {
+          spin();
+        }, 1000);
+      }
+    }
+
+    function stopAutoSpin() {
+      autoSpinning = false;
+      clearInterval(autoSpinInterval);
+      document.getElementById('autoSpinBtn').textContent = 'AUTO SPIN';
     }
   </script>
 </body>
