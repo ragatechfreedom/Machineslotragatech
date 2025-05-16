@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>TRD Slot Rush</title>
+  <script src="https://cdn.jsdelivr.net/npm/js-sha256@0.9.0/src/sha256.min.js"></script>
   <style>
     body {
       font-family: sans-serif;
@@ -48,13 +49,19 @@
       margin-top: 10px;
       font-size: 20px;
     }
+    #hash-display {
+      font-size: 12px;
+      margin-top: 10px;
+      color: #aaa;
+    }
   </style>
 </head>
 <body>
   <h1>TRD Slot Rush</h1>
 
   <div id="balance-panel">
-    TRD Balances: <span id="balance">100</span>
+    TRD Balance: <span id="balance">100</span><br />
+    Spin Cost: 0.005 TRD
   </div>
 
   <div class="slot-container">
@@ -68,15 +75,21 @@
   <button onclick="spin()">SPIN</button>
   <button onclick="toggleAutoSpin()" id="autoSpinBtn">AUTO SPIN</button>
   <div id="result"></div>
+  <div id="hash-display"></div>
 
   <script>
     const symbols = ['💰', '💡', '🔪', '📱', '💎', '💸'];
     let balance = 100;
     let autoSpinning = false;
     let autoSpinInterval;
+    const username = 'guestcoba';
 
     function updateBalanceDisplay() {
       document.getElementById('balance').textContent = balance.toFixed(3);
+    }
+
+    function getRandomSymbol(hashSegment) {
+      return symbols[parseInt(hashSegment, 16) % symbols.length];
     }
 
     function spin() {
@@ -89,10 +102,15 @@
       balance -= 0.005;
       updateBalanceDisplay();
 
+      const seed = `${username}-${Date.now()}`;
+      const hash = sha256(seed);
+      document.getElementById('hash-display').textContent = `Hash: ${hash}`;
+
       const reels = [];
-      for (let i = 1; i <= 5; i++) {
-        const symbol = symbols[Math.floor(Math.random() * symbols.length)];
-        document.getElementById('reel' + i).textContent = symbol;
+      for (let i = 0; i < 5; i++) {
+        const segment = hash.substr(i * 4, 4);
+        const symbol = getRandomSymbol(segment);
+        document.getElementById('reel' + (i + 1)).textContent = symbol;
         reels.push(symbol);
       }
 
@@ -104,11 +122,11 @@
       let maxMatch = Math.max(...Object.values(counts));
 
       if (maxMatch >= 4) {
-        reward = 1000;
-        document.getElementById('result').textContent = 'EPIC WIN! 4+ Matches';
+        reward = 10000;
+        document.getElementById('result').textContent = 'EPIC WIN! 4+ Matches = +10000 TRD';
       } else if (maxMatch === 3) {
-        reward = 1;
-        document.getElementById('result').textContent = 'Nice! 3 Matches';
+        reward = 100;
+        document.getElementById('result').textContent = 'Nice! 3 Matches = +100 TRD';
       } else {
         reward = 0.01;
         document.getElementById('result').textContent = 'No match... Consolation +0.01 TRD';
