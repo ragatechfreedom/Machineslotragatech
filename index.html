@@ -104,11 +104,11 @@
       let maxMatch = Math.max(...Object.values(counts));
 
       if (maxMatch >= 4) {
-        reward = 10000;
-        document.getElementById('result').textContent = 'EPIC WIN! 4+ Matches = +10000 TRD';
+        reward = 1000;
+        document.getElementById('result').textContent = 'EPIC WIN! 4+ Matches';
       } else if (maxMatch === 3) {
-        reward = 100;
-        document.getElementById('result').textContent = 'Nice! 3 Matches = +100 TRD';
+        reward = 1;
+        document.getElementById('result').textContent = 'Nice! 3 Matches';
       } else {
         reward = 0.01;
         document.getElementById('result').textContent = 'No match... Consolation +0.01 TRD';
