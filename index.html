@@ -108,13 +108,10 @@
         reward = 1000;
         document.getElementById('result').textContent = 'EPIC WIN! 4+ Matches = +1000 TRD';
       } else if (maxMatch === 3) {
-        reward = 500;
-        document.getElementById('result').textContent = 'Great! 3 Matches = +500 TRD';
-      } else if (maxMatch === 2) {
         reward = 100;
-        document.getElementById('result').textContent = 'Nice! 2 Matches = +100 TRD';
+        document.getElementById('result').textContent = 'Great! 3 Matches = +500 TRD';
       } else {
-        reward = 0.001;
+        reward = 0.01;
         document.getElementById('result').textContent = 'No match... Consolation +0.001 TRD';
       }
 
