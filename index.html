@@ -59,7 +59,7 @@
   <h1>TRD COIN MINING</h1>
 
   <div id="balance-panel">
-    TRD Balance: <span id="balance">100.000</span>
+    Balance Confirm: <span id="balance">000.01000</span>
   </div>
 
   <div class="slot-container">
@@ -76,7 +76,7 @@
   <div id="hash-display"></div>
 
   <script>
-    let balance = 100.0;
+    let balance = 000.01000;
     let autoSpinning = false;
     let autoSpinInterval;
     const username = 'guestcoba';
@@ -87,13 +87,13 @@
     }
 
     async function spin() {
-      if (balance < 0.005) {
+      if (balance < 0.00001) {
         document.getElementById('result').textContent = 'Not enough TRD to spin!';
         stopAutoSpin();
         return;
       }
 
-      balance -= 0.005;
+      balance -= 0.00001;
       updateBalanceDisplay();
 
       try {
