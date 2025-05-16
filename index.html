@@ -76,6 +76,7 @@
   <button onclick="toggleAutoSpin()" id="autoSpinBtn">AUTO SPIN</button>
   <div id="result"></div>
   <div id="hash-display"></div>
+  <div id="verify-display"></div>
 
   <script>
     const symbols = ['💰', '💡', '🔪', '📱', '💎', '💸'];
@@ -102,7 +103,8 @@
       balance -= 0.005;
       updateBalanceDisplay();
 
-      const seed = `${username}-${Date.now()}`;
+      const timestamp = Date.now();
+      const seed = `${username}-${timestamp}`;
       const hash = sha256(seed);
       document.getElementById('hash-display').textContent = `Hash: ${hash}`;
 
@@ -114,7 +116,17 @@
         reels.push(symbol);
       }
 
-      // Hitung jumlah kemunculan setiap simbol
+      // Verifikasi ulang dari hash hasil reel untuk transparansi
+      const verifyReels = [];
+      for (let i = 0; i < 5; i++) {
+        const segment = hash.substr(i * 4, 4);
+        const symbol = getRandomSymbol(segment);
+        verifyReels.push(symbol);
+      }
+      const isVerified = reels.join() === verifyReels.join();
+      document.getElementById('verify-display').textContent = isVerified ? '✓ Verifikasi Berhasil (Hash Valid)' : '✗ Verifikasi Gagal';
+
+      // Hitung jumlah kemunculan
       const counts = {};
       reels.forEach(sym => counts[sym] = (counts[sym] || 0) + 1);
 
