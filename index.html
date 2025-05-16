@@ -62,6 +62,8 @@
     <div class="reel" id="reel1">?</div>
     <div class="reel" id="reel2">?</div>
     <div class="reel" id="reel3">?</div>
+    <div class="reel" id="reel4">?</div>
+    <div class="reel" id="reel5">?</div>
   </div>
 
   <button onclick="spin()">SPIN</button>
@@ -75,7 +77,7 @@
     let autoSpinInterval;
 
     function updateBalanceDisplay() {
-      document.getElementById('balance').textContent = balance;
+      document.getElementById('balance').textContent = balance.toFixed(3);
     }
 
     function spin() {
@@ -88,23 +90,32 @@
       balance -= 5;
       updateBalanceDisplay();
 
-      const r1 = symbols[Math.floor(Math.random() * symbols.length)];
-      const r2 = symbols[Math.floor(Math.random() * symbols.length)];
-      const r3 = symbols[Math.floor(Math.random() * symbols.length)];
+      const reels = [];
+      for (let i = 1; i <= 5; i++) {
+        const symbol = symbols[Math.floor(Math.random() * symbols.length)];
+        document.getElementById('reel' + i).textContent = symbol;
+        reels.push(symbol);
+      }
 
-      document.getElementById('reel1').textContent = r1;
-      document.getElementById('reel2').textContent = r2;
-      document.getElementById('reel3').textContent = r3;
+      // Hitung jumlah kemunculan setiap simbol
+      const counts = {};
+      reels.forEach(sym => counts[sym] = (counts[sym] || 0) + 1);
 
       let reward = 0;
-      if (r1 === r2 && r2 === r3) {
+      let maxMatch = Math.max(...Object.values(counts));
+
+      if (maxMatch >= 4) {
+        reward = 1000;
+        document.getElementById('result').textContent = 'EPIC WIN! 4+ Matches = +1000 TRD';
+      } else if (maxMatch === 3) {
+        reward = 500;
+        document.getElementById('result').textContent = 'Great! 3 Matches = +500 TRD';
+      } else if (maxMatch === 2) {
         reward = 100;
-        document.getElementById('result').textContent = 'JACKPOT! +100 TRD';
-      } else if (r1 === r2 || r2 === r3 || r1 === r3) {
-        reward = 10;
-        document.getElementById('result').textContent = 'Nice! +10 TRD';
+        document.getElementById('result').textContent = 'Nice! 2 Matches = +100 TRD';
       } else {
-        document.getElementById('result').textContent = 'Try Again...';
+        reward = 0.001;
+        document.getElementById('result').textContent = 'No match... Consolation +0.001 TRD';
       }
 
       balance += reward;
