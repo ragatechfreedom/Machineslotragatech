@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TRD Wallet Generator</title>
+  <style>
+    body {
+      background: #111;
+      color: #fff;
+      font-family: monospace;
+      text-align: center;
+      padding: 40px;
+    }
+    .wallet-box {
+      background: #222;
+      padding: 20px;
+      border-radius: 12px;
+      display: inline-block;
+    }
+    .wallet-box h2 {
+      margin-bottom: 10px;
+    }
+    .wallet-box p {
+      background: #000;
+      padding: 10px;
+      border-radius: 6px;
+      word-break: break-all;
+    }
+    button {
+      margin-top: 15px;
+      padding: 10px 20px;
+      background: #00c853;
+      border: none;
+      border-radius: 6px;
+      color: #fff;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="wallet-box">
+    <h2>Your TRD Wallet</h2>
+    <p id="wallet-address">Generating...</p>
+    <button onclick="regenerate()">Generate New Wallet</button>
+  </div>
+
+  <script>
+    function generateWalletAddress() {
+      const chars = 'abcdefghijklmnopqrstuvwxyz0123456789';
+      let addr = 'trd1';
+      for (let i = 0; i < 28; i++) {
+        addr += chars.charAt(Math.floor(Math.random() * chars.length));
+      }
+      return addr;
+    }
+
+    function regenerate() {
+      const newAddr = generateWalletAddress();
+      document.getElementById('wallet-address').textContent = newAddr;
+      localStorage.setItem('trd_wallet', newAddr);
+    }
+
+    // On load
+    const savedWallet = localStorage.getItem('trd_wallet') || generateWalletAddress();
+    document.getElementById('wallet-address').textContent = savedWallet;
+    localStorage.setItem('trd_wallet', savedWallet);
+  </script>
+</body>
+</html>
