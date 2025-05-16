@@ -43,22 +43,46 @@
       font-size: 24px;
       font-weight: bold;
     }
+    #balance-panel {
+      margin-top: 10px;
+      font-size: 20px;
+    }
   </style>
 </head>
 <body>
   <h1>TRD Slot Rush</h1>
+
+  <div id="balance-panel">
+    TRD Balance: <span id="balance">100</span><br />
+    Spin Cost: 5 TRD
+  </div>
+
   <div class="slot-container">
     <div class="reel" id="reel1">?</div>
     <div class="reel" id="reel2">?</div>
     <div class="reel" id="reel3">?</div>
   </div>
+
   <button onclick="spin()">SPIN</button>
   <div id="result"></div>
 
   <script>
     const symbols = ['💰', '💡', '🔪', '📱', '💎', '💸'];
+    let balance = 100;
+
+    function updateBalanceDisplay() {
+      document.getElementById('balance').textContent = balance;
+    }
 
     function spin() {
+      if (balance < 5) {
+        document.getElementById('result').textContent = 'Not enough TRD to spin!';
+        return;
+      }
+
+      balance -= 5;
+      updateBalanceDisplay();
+
       const r1 = symbols[Math.floor(Math.random() * symbols.length)];
       const r2 = symbols[Math.floor(Math.random() * symbols.length)];
       const r3 = symbols[Math.floor(Math.random() * symbols.length)];
@@ -67,13 +91,19 @@
       document.getElementById('reel2').textContent = r2;
       document.getElementById('reel3').textContent = r3;
 
+      let reward = 0;
       if (r1 === r2 && r2 === r3) {
+        reward = 100;
         document.getElementById('result').textContent = 'JACKPOT! +100 TRD';
       } else if (r1 === r2 || r2 === r3 || r1 === r3) {
+        reward = 10;
         document.getElementById('result').textContent = 'Nice! +10 TRD';
       } else {
         document.getElementById('result').textContent = 'Try Again...';
       }
+
+      balance += reward;
+      updateBalanceDisplay();
     }
   </script>
 </body>
