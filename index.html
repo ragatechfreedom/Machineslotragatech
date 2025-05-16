@@ -54,7 +54,7 @@
   <h1>TRD Slot Rush</h1>
 
   <div id="balance-panel">
-    TRD Balance: <span id="balance">100</span>
+    TRD Balance: <span id="balance">1000</span>
   </div>
 
   <div class="slot-container">
@@ -71,7 +71,7 @@
 
   <script>
     const symbols = ['💰', '💡', '🔪', '📱', '💎', '💸'];
-    let balance = 100;
+    let balance = 1000;
     let autoSpinning = false;
     let autoSpinInterval;
 
@@ -80,17 +80,17 @@
     }
 
     function spin() {
-      if (balance < 5) {
+      if (balance < 0.005) {
         document.getElementById('result').textContent = 'Not enough TRD to spin!';
         stopAutoSpin();
         return;
       }
 
-      balance -= 5;
+      balance -= 0.005;
       updateBalanceDisplay();
 
       const reels = [];
-      for (let i = 1; i <= 5; i++) {
+      for (let i = 1; i <= 0.005; i++) {
         const symbol = symbols[Math.floor(Math.random() * symbols.length)];
         document.getElementById('reel' + i).textContent = symbol;
         reels.push(symbol);
