@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>TRD Wallet Dashboard</title>
+  <title>Domp-e Wallet</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet"/>
   <style>
     body {
@@ -15,106 +15,25 @@
     .container {
       max-width: 480px;
       margin: auto;
-      padding: 1.5rem;
-    }
-    .header {
+      padding: 2rem 1.5rem;
       text-align: center;
-      margin-bottom: 2rem;
     }
-    .header h1 {
-      font-size: 1.8rem;
-      margin-bottom: 0.5rem;
-      color: #00ffe7;
-    }
-    .header small {
-      color: #cccccc;
-    }
-    .wallet-box {
-      background-color: #1a1c2f;
-      border-radius: 12px;
-      padding: 1.5rem;
-      margin-bottom: 1.5rem;
-      box-shadow: 0 0 10px #00ffe733;
-    }
-    .wallet-address {
-      font-size: 0.9rem;
-      word-break: break-all;
-      color: #aaaaaa;
-      margin-bottom: 0.5rem;
-    }
-    .balance {
+    .logo {
       font-size: 2rem;
-      font-weight: 600;
-      color: #00ffe7;
-    }
-    .actions {
-      display: flex;
-      justify-content: space-between;
-      gap: 1rem;
-      margin-top: 2rem;
-    }
-    .btn {
-      flex: 1;
-      background-color: #00ffe7;
-      color: #000;
-      border: none;
-      padding: 0.9rem;
-      border-radius: 10px;
       font-weight: bold;
-      cursor: pointer;
-      transition: 0.3s ease;
+      color: #00ffe7;
+      margin-bottom: 1rem;
     }
-    .btn:hover {
-      background-color: #00dfc5;
-    }
-    .footer {
-      margin-top: 2rem;
-      text-align: center;
-      font-size: 0.8rem;
-      color: #666;
+    .subtitle {
+      color: #888;
+      font-size: 0.95rem;
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <div class="header">
-      <h1>TRD Wallet</h1>
-      <small id="userEmail">user@example.com</small>
-    </div>
-
-    <div class="wallet-box">
-      <div class="wallet-address" id="walletAddress">trd1q...</div>
-      <div class="balance" id="balance">0.00000 TRD</div>
-    </div>
-
-    <div class="actions">
-      <button class="btn" onclick="sendTRD()">Kirim TRD</button>
-      <button class="btn" onclick="receiveTRD()">Terima TRD</button>
-    </div>
-
-    <div class="footer">
-      v1.0 — TRD Wallet System  
-    </div>
+    <div class="logo">Domp-e</div>
+    <div class="subtitle">Silakan login atau daftar untuk mengakses dompet TRD Anda</div>
   </div>
-
-  <script>
-    // Load wallet & email dari localStorage
-    const email = localStorage.getItem('trd_email') || 'guest@trd.local';
-    const wallet = localStorage.getItem('trd_wallet') || 'trd1qexamplegenerated';
-
-    document.getElementById('userEmail').innerText = email;
-    document.getElementById('walletAddress').innerText = wallet;
-
-    // Dummy balance (nanti bisa fetch dari backend)
-    document.getElementById('balance').innerText = '0.01000 TRD';
-
-    function sendTRD() {
-      alert("Fitur Kirim TRD akan segera tersedia!");
-    }
-
-    function receiveTRD() {
-      alert("Alamat TRD kamu:\n" + wallet);
-    }
-  </script>
 </body>
 </html>
