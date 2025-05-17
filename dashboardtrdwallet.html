@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Domp-e Wallet</title>
+  <title>DOMPET</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet"/>
   <style>
     body {
@@ -11,29 +11,63 @@
       font-family: 'Inter', sans-serif;
       background-color: #0c0e1b;
       color: #ffffff;
-    }
-    .container {
-      max-width: 480px;
-      margin: auto;
-      padding: 2rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      flex-direction: column;
       text-align: center;
     }
+
     .logo {
-      font-size: 2rem;
+      font-size: 2.5rem;
       font-weight: bold;
       color: #00ffe7;
-      margin-bottom: 1rem;
+      margin-bottom: 0.5rem;
     }
-    .subtitle {
-      color: #888;
-      font-size: 0.95rem;
+
+    .tagline {
+      font-size: 1.05rem;
+      color: #cccccc;
+      margin-bottom: 2rem;
+    }
+
+    .btn {
+      background-color: #00ffe7;
+      color: #000000;
+      font-weight: bold;
+      padding: 0.9rem 1.8rem;
+      margin: 0.5rem;
+      border: none;
+      border-radius: 10px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.25s ease;
+    }
+
+    .btn:hover {
+      background-color: #00dfc0;
+    }
+
+    .footer {
+      position: absolute;
+      bottom: 1rem;
+      font-size: 0.75rem;
+      color: #555;
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <div class="logo">Domp-e</div>
-    <div class="subtitle">Silakan login atau daftar untuk mengakses dompet TRD Anda</div>
+  <div class="logo">Domp-e</div>
+  <div class="tagline">Dompet digital terdesentralisasi untuk semua. Aman, cepat, dan cocok untuk semua jenis perangkat.</div>
+
+  <div>
+    <button class="btn" onclick="window.location.href='login.html'">Login</button>
+    <button class="btn" onclick="window.location.href='register.html'">Daftar</button>
+  </div>
+
+  <div class="footer">
+    Domp-e Wallet v1.0 — Powered by TRD Network
   </div>
 </body>
 </html>
